@@ -1,0 +1,27 @@
+{% extends "ProjectInsectBundle:Home:layout.html.twig" %}
+ 
+ {% block content %}
+    <h1>friends request</h1>
+
+  <table class="table table-hover">
+      
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.username }}</td>
+                 <td>
+                <ul>
+                    <li>
+                      <a href="{{ path('project_insect_addFriend', { 'id': entity.id }) }}">accept</a>
+                    </li>
+                    <li>
+                      <a href="{{ path('project_insect_deleteRequest', { 'id': entity.id }) }}">refuse</a>  
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

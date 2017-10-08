@@ -1,0 +1,35 @@
+
+{% extends "ProjectInsectBundle:Home:layout.html.twig" %}
+ 
+ {% block content %}  
+      <h1>friends</h1>
+<table class="table table-hover">
+       
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.username }}</td>
+                <td> 
+                    <a href="{{ path('project_insect_deleteFriend', { 'id': entity.id }) }}">
+                      delete
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        
+        <h1>others</h1>
+<table class="table table-hover">
+       
+        <tbody>
+        {% for insect in insects %}
+            <tr>
+                <td>{{ insect.username }}</td>
+                <td> 
+                    <a href="{{ path('project_insect_sendRequest', { 'id': insect.id }) }}">
+                      add
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        
+{% endblock %}

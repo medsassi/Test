@@ -1,0 +1,4 @@
+services:
+#    project_insect.example:
+#        class: Project\InsectBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,16 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+  <h1 class="mt-5">Register</h1>
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    {% form_theme form 'form/fields.html.twig' %}
+    {{ form_widget(form) }}
+   
+    <div>
+        <input type="submit"  class="btn btn-success btn-lg" value="{{ 'Register'|trans }}" />
+    </div>
+    
+   
+</form>
+
+    

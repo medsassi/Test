@@ -1,0 +1,31 @@
+project_insect_homepage:
+    path:     /home
+    defaults: { _controller: ProjectInsectBundle:Default:index }
+    
+project_insect_list:
+    path:     /listInsect
+    defaults: { _controller: ProjectInsectBundle:Insect:list }
+    
+project_insect_search:
+    path:     /listInsectSearch
+    defaults: { _controller: ProjectInsectBundle:Insect:search }
+
+project_insect_addFriend:
+    path:     /{id}/addInsect
+    defaults: { _controller: ProjectInsectBundle:Insect:add }    
+    
+project_insect_deleteFriend:
+    path:     /{id}/deleteInsect
+    defaults: { _controller: ProjectInsectBundle:Insect:delete }
+
+project_insect_listRequest:
+    path:     /listRequest
+    defaults: { _controller: ProjectInsectBundle:Friendship:list }
+    
+project_insect_sendRequest:
+    path:     /{id}/sendRequest
+    defaults: { _controller: ProjectInsectBundle:Friendship:send }    
+    
+project_insect_deleteRequest:
+    path:     /{id}/deleteRequest
+    defaults: { _controller: ProjectInsectBundle:Friendship:delete }
