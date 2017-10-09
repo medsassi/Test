@@ -36,25 +36,26 @@ class __TwigTemplate_b64ddc9df98877b2dba7e49716933e4f234160bd25fb708a862636501cd
             echo "                 <div class=\"container\">
       <div class=\"row\">
         <div class=\"col-lg-12 text-center\">
-          <h1 class=\"mt-5\">A Bootstrap 4 Starter Template</h1>
-          <p class=\"lead\">Complete with pre-defined file paths and responsive navigation!</p>
+          <h1 class=\"mt-5\">Welcome to the world of InsecTs</h1>
+          <p class=\"lead\">this is a test this is a test this is a test!</p>
           <ul class=\"list-unstyled\">
             <li>Bootstrap 4.0.0-beta</li>
             <li>jQuery 3.2.1</li>
           </ul>
+         
           ";
         } else {
-            // line 17
+            // line 18
             echo "              </br>
                             </br>
 
            <form action=\"";
-            // line 20
+            // line 21
             echo $this->env->getExtension('Symfony\Bridge\Twig\Extension\RoutingExtension')->getPath("project_insect_search");
             echo "\" method=\"post\">
                
                 <div class=\"input-group\">
-                 <input type=\"text\" name=\"search \"class=\"form-control-lg\" placeholder=\"Search insect\">
+                 <input type=\"text\" name=\"search\" class=\"form-control-lg\" placeholder=\"Search insect\">
                     <div class=\"input-group-btn\">
                     <button class=\"btn btn-default\" type=\"submit\">
                     <i class=\"fa fa-search fa-2x\" aria-hidden=\"true\"></i>
@@ -64,7 +65,7 @@ class __TwigTemplate_b64ddc9df98877b2dba7e49716933e4f234160bd25fb708a862636501cd
             </form>
           ";
         }
-        // line 32
+        // line 33
         echo "        </div>
       </div>
     </div>
@@ -83,7 +84,7 @@ class __TwigTemplate_b64ddc9df98877b2dba7e49716933e4f234160bd25fb708a862636501cd
 
     public function getDebugInfo()
     {
-        return array (  68 => 32,  53 => 20,  48 => 17,  36 => 7,  34 => 6,  28 => 4,  11 => 2,);
+        return array (  69 => 33,  54 => 21,  49 => 18,  36 => 7,  34 => 6,  28 => 4,  11 => 2,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -105,12 +106,13 @@ class __TwigTemplate_b64ddc9df98877b2dba7e49716933e4f234160bd25fb708a862636501cd
                  <div class=\"container\">
       <div class=\"row\">
         <div class=\"col-lg-12 text-center\">
-          <h1 class=\"mt-5\">A Bootstrap 4 Starter Template</h1>
-          <p class=\"lead\">Complete with pre-defined file paths and responsive navigation!</p>
+          <h1 class=\"mt-5\">Welcome to the world of InsecTs</h1>
+          <p class=\"lead\">this is a test this is a test this is a test!</p>
           <ul class=\"list-unstyled\">
             <li>Bootstrap 4.0.0-beta</li>
             <li>jQuery 3.2.1</li>
           </ul>
+         
           {% else %}
               </br>
                             </br>
@@ -118,7 +120,7 @@ class __TwigTemplate_b64ddc9df98877b2dba7e49716933e4f234160bd25fb708a862636501cd
            <form action=\"{{ path(\"project_insect_search\") }}\" method=\"post\">
                
                 <div class=\"input-group\">
-                 <input type=\"text\" name=\"search \"class=\"form-control-lg\" placeholder=\"Search insect\">
+                 <input type=\"text\" name=\"search\" class=\"form-control-lg\" placeholder=\"Search insect\">
                     <div class=\"input-group-btn\">
                     <button class=\"btn btn-default\" type=\"submit\">
                     <i class=\"fa fa-search fa-2x\" aria-hidden=\"true\"></i>

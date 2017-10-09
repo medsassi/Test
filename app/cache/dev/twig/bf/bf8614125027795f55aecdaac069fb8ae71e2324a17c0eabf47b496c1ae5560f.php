@@ -58,7 +58,7 @@ class __TwigTemplate_615cb5a20a9708312ea053138aaa4692048c3a8c1b47caa9aeaa0656ea2
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['entity'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 19
-        echo "        
+        echo "</table>     
         <h1>others</h1>
 <table class=\"table table-hover\">
        
@@ -89,7 +89,7 @@ class __TwigTemplate_615cb5a20a9708312ea053138aaa4692048c3a8c1b47caa9aeaa0656ea2
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['insect'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 34
-        echo "        
+        echo "  </table>        
 ";
     }
 
@@ -136,7 +136,7 @@ class __TwigTemplate_615cb5a20a9708312ea053138aaa4692048c3a8c1b47caa9aeaa0656ea2
                 </td>
             </tr>
         {% endfor %}
-        
+</table>     
         <h1>others</h1>
 <table class=\"table table-hover\">
        
@@ -151,7 +151,7 @@ class __TwigTemplate_615cb5a20a9708312ea053138aaa4692048c3a8c1b47caa9aeaa0656ea2
                 </td>
             </tr>
         {% endfor %}
-        
+  </table>        
 {% endblock %}", "ProjectInsectBundle:Insect:InsectListSearch.html.twig", "C:\\wamp64\\www\\InsectProject\\src\\Project\\InsectBundle/Resources/views/Insect/InsectListSearch.html.twig");
     }
 }

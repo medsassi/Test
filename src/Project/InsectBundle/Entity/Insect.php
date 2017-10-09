@@ -31,6 +31,7 @@ class Insect extends BaseUser
      private $description;
      
      
+   
     /**
      * @ORM\ManyToMany(targetEntity="Insect")
       @ORM\JoinTable(name="friends",

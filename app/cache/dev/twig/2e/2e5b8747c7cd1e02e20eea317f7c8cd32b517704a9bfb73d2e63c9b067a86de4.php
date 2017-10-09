@@ -29,13 +29,15 @@ class __TwigTemplate_906036eaec7a72d6777c0cc00340607546036c81fe302f20a6a14af1714
         // line 6
         $this->env->getExtension('form')->renderer->setTheme((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), array(0 => "form/fields.html.twig"));
         // line 7
-        echo "    ";
+        echo "    
+    ";
+        // line 8
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'widget');
         echo "
    
     <div>
         <input type=\"submit\"  class=\"btn btn-success btn-lg\" value=\"";
-        // line 10
+        // line 11
         echo twig_escape_filter($this->env, $this->env->getExtension('Symfony\Bridge\Twig\Extension\TranslationExtension')->trans("Register", array(), "FOSUserBundle"), "html", null, true);
         echo "\" />
     </div>
@@ -59,7 +61,7 @@ class __TwigTemplate_906036eaec7a72d6777c0cc00340607546036c81fe302f20a6a14af1714
 
     public function getDebugInfo()
     {
-        return array (  39 => 10,  32 => 7,  30 => 6,  24 => 5,  19 => 2,);
+        return array (  41 => 11,  35 => 8,  32 => 7,  30 => 6,  24 => 5,  19 => 2,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -78,6 +80,7 @@ class __TwigTemplate_906036eaec7a72d6777c0cc00340607546036c81fe302f20a6a14af1714
 
 <form action=\"{{ path('fos_user_registration_register') }}\" {{ form_enctype(form) }} method=\"POST\" class=\"fos_user_registration_register\">
     {% form_theme form 'form/fields.html.twig' %}
+    
     {{ form_widget(form) }}
    
     <div>
