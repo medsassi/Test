@@ -85,11 +85,9 @@ class InsectController  extends Controller
         $em->persist($request);
         $em->flush();
         
-        $insectFriends = $insect->getFriends();
         
-        return $this->render('ProjectInsectBundle:Insect:InsectList.html.twig', array(
-            'entities' => $insectFriends,
-        ));
+        
+       return $this->redirect($this->generateUrl('project_insect_list'));
         
     }
     
@@ -115,12 +113,10 @@ class InsectController  extends Controller
         $em->flush();
        
         
-        $insectFriends = $insect->getFriends();
+        
         
 
-        return $this->render('ProjectInsectBundle:Insect:InsectList.html.twig', array(
-            'entities' => $insectFriends,
-        ));
+      return $this->redirect($this->generateUrl('project_insect_list'));
         
     }
 }
