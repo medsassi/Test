@@ -27,7 +27,17 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 class InsectController  extends Controller
 {
  
- 
+    /**
+     * @Rest\Post("/api/login")
+     */
+    public function postLoginAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $password = $data["password"];
+        $login = $data["login"];
+        return new JsonResponse(base64_encode($login));
+    }
+    
     /**
      @Rest\Get("/api/friends")
     */
@@ -132,45 +142,40 @@ class InsectController  extends Controller
         
     }
     
-     /**
-     @Rest\POST("/api/add")
-    */
+    /**
+     * @Rest\Post("/api/addFriend")
+     */
     public function addAction(Request $request)
     {
         $body = $request->getContent();
         $data = json_decode($body, true);
-        $username = $data['name'] ;
-      
-       // $em = $this->getDoctrine()->getManager();
-      //  $insect = $this->getUser();
-       
-    //    $insectToAdd = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
-    //    $insect->addFriend($insectToAdd);
-    //    $em->persist($insect);
-       // $em->flush();
+        $id = $data['id'] ;
+
+        $em = $this->getDoctrine()->getManager();
+        $insect = $this->getUser(); // utilisateur courant a changer
+        $insectToAdd = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
+        $insect->addFriend($insectToAdd);
+        $em->persist($insect);
+        $em->flush();
         
-       return new Response($username);
-        
+        return new Response("ajoute");
+
     }
     
-    /**
-     
-     * @Rest\Delete("/api/delete")
-
-     * @return View
+   /**
+     * @Rest\DELETE("/api/deleteFriend/{id}")
      */
-    public function deleteAction($request)
+    public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $insect = $this->getUser();
-        $insectToRemove = $em->getRepository('ProjectInsectBundle:Insect')->find($request);   
+        $insectToRemove = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
         $insect->removeFriend($insectToRemove);
         $em->persist($insect);
         $em->flush();
-       
-        $view = View::create();
-        $view->setData("User deteled.")->setStatusCode(204);
-        return $view;
-        
+
+
+        return new Response("supprime");
+
     }
 }
