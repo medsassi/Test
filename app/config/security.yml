@@ -27,5 +27,5 @@ security:
             anonymous:    true
         # disables authentication for assets and the profiler, adapt it according to your needs
         
-    access_control:
+    access_control: true
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

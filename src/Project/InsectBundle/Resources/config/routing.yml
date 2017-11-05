@@ -2,9 +2,9 @@ project_insect_homepage:
     path:     /home
     defaults: { _controller: ProjectInsectBundle:Default:index }
     
-project_insect_list:
-    path:     /listInsect
-    defaults: { _controller: ProjectInsectBundle:Insect:list }
+#project_insect_list:
+#   path:     /listInsect
+#   defaults: { _controller: ProjectInsectBundle:Insect:list }
     
 project_insect_search:
     path:     /listInsectSearch
@@ -29,3 +29,7 @@ project_insect_sendRequest:
 project_insect_deleteRequest:
     path:     /{id}/deleteRequest
     defaults: { _controller: ProjectInsectBundle:Friendship:delete }
+    
+insect:
+    type:     rest
+    resource: Project\InsectBundle\Controller\InsectController

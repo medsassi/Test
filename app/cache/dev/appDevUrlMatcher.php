@@ -132,17 +132,9 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'Project\\InsectBundle\\Controller\\DefaultController::indexAction',  '_route' => 'project_insect_homepage',);
         }
 
-        if (0 === strpos($pathinfo, '/listInsect')) {
-            // project_insect_list
-            if ($pathinfo === '/listInsect') {
-                return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::listAction',  '_route' => 'project_insect_list',);
-            }
-
-            // project_insect_search
-            if ($pathinfo === '/listInsectSearch') {
-                return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::searchAction',  '_route' => 'project_insect_search',);
-            }
-
+        // project_insect_search
+        if ($pathinfo === '/listInsectSearch') {
+            return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::searchAction',  '_route' => 'project_insect_search',);
         }
 
         // project_insect_addFriend
@@ -170,9 +162,70 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'project_insect_deleteRequest')), array (  '_controller' => 'Project\\InsectBundle\\Controller\\FriendshipController::deleteAction',));
         }
 
-        // homepage
-        if ($pathinfo === '/app/example') {
-            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+        // search
+        if ($pathinfo === '/search') {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_search;
+            }
+
+            return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::searchAction',  '_format' => NULL,  '_route' => 'search',);
+        }
+        not_search:
+
+        // add
+        if ($pathinfo === '/api/addFriend') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not_add;
+            }
+
+            return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::addAction',  '_format' => NULL,  '_route' => 'add',);
+        }
+        not_add:
+
+        // delete
+        if (preg_match('#^/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            if ($this->context->getMethod() != 'DELETE') {
+                $allow[] = 'DELETE';
+                goto not_delete;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete')), array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::deleteAction',  '_format' => NULL,));
+        }
+        not_delete:
+
+        if (0 === strpos($pathinfo, '/ap')) {
+            if (0 === strpos($pathinfo, '/api')) {
+                // get_list
+                if ($pathinfo === '/api/friends') {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_get_list;
+                    }
+
+                    return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::getListAction',  '_format' => NULL,  '_route' => 'get_list',);
+                }
+                not_get_list:
+
+                // get_list_all
+                if ($pathinfo === '/api/list') {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_get_list_all;
+                    }
+
+                    return array (  '_controller' => 'Project\\InsectBundle\\Controller\\InsectController::getListAllAction',  '_format' => NULL,  '_route' => 'get_list_all',);
+                }
+                not_get_list_all:
+
+            }
+
+            // homepage
+            if ($pathinfo === '/app/example') {
+                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+            }
+
         }
 
         if (0 === strpos($pathinfo, '/log')) {

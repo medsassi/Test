@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/wamp64/www/InsectProject/src/Project/InsectBundle/Controller/InsectController.php</file>
+            <file>file:/C:/wamp64/www/InsectProject/src/Project/InsectBundle/Resources/views/Home/layout.html.twig</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/config/routing.yml</file>
+            <file>file:/C:/wamp64/www/InsectProject/src/Project/InsectBundle/Entity/Insect.php</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/config/services.yml</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/config/security.yml</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
+            <file>file:/C:/wamp64/www/InsectProject/src/Project/InsectBundle/Resources/config/routing.yml</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/config/config.yml</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/config/parameters.yml</file>
+            <file>file:/C:/wamp64/www/InsectProject/app/AppKernel.php</file>
+            <file>file:/C:/wamp64/www/InsectProject/composer.json</file>
+        </group>
+    </open-files>
+</project-private>

@@ -64,7 +64,7 @@ class __TwigTemplate_8ef8cb72afadf80b0110dd404e1b3af895c0df8b50e97fcc187faf81e52
         if ( !$this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "user", array())) {
             // line 45
             echo "             
-             <a class=\"navbar-brand\" href=\"#\">Start Bootstrap</a>
+             <a class=\"navbar-brand\" href=\"#\">|---------></a>
         <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
           <span class=\"navbar-toggler-icon\"></span>
         </button>
@@ -188,9 +188,7 @@ class __TwigTemplate_8ef8cb72afadf80b0110dd404e1b3af895c0df8b50e97fcc187faf81e52
                 ";
             }
             // line 108
-            echo "              <a class=\"nav-link\" href=\"";
-            echo $this->env->getExtension('Symfony\Bridge\Twig\Extension\RoutingExtension')->getPath("project_insect_list");
-            echo "\">Friends</a>
+            echo "              <a class=\"nav-link\" href=\"#\">Friends</a>
             </li>
             <li class=\"nav-item\">
               <a class=\"nav-link\" href=\"";
@@ -302,7 +300,7 @@ class __TwigTemplate_8ef8cb72afadf80b0110dd404e1b3af895c0df8b50e97fcc187faf81e52
 
     public function getDebugInfo()
     {
-        return array (  290 => 127,  287 => 126,  280 => 16,  276 => 15,  272 => 14,  269 => 13,  266 => 12,  260 => 10,  256 => 9,  250 => 7,  247 => 6,  221 => 128,  219 => 126,  206 => 115,  198 => 111,  191 => 108,  187 => 106,  183 => 104,  181 => 103,  175 => 101,  171 => 99,  167 => 97,  165 => 96,  157 => 92,  153 => 90,  149 => 88,  147 => 87,  137 => 81,  128 => 75,  125 => 74,  121 => 73,  117 => 71,  115 => 70,  108 => 66,  105 => 65,  101 => 64,  97 => 62,  95 => 61,  88 => 57,  85 => 56,  81 => 55,  77 => 53,  75 => 52,  66 => 45,  64 => 44,  61 => 43,  59 => 42,  34 => 19,  31 => 12,  29 => 6,  22 => 1,);
+        return array (  288 => 127,  285 => 126,  278 => 16,  274 => 15,  270 => 14,  267 => 13,  264 => 12,  258 => 10,  254 => 9,  248 => 7,  245 => 6,  219 => 128,  217 => 126,  204 => 115,  196 => 111,  191 => 108,  187 => 106,  183 => 104,  181 => 103,  175 => 101,  171 => 99,  167 => 97,  165 => 96,  157 => 92,  153 => 90,  149 => 88,  147 => 87,  137 => 81,  128 => 75,  125 => 74,  121 => 73,  117 => 71,  115 => 70,  108 => 66,  105 => 65,  101 => 64,  97 => 62,  95 => 61,  88 => 57,  85 => 56,  81 => 55,  77 => 53,  75 => 52,  66 => 45,  64 => 44,  61 => 43,  59 => 42,  34 => 19,  31 => 12,  29 => 6,  22 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -360,7 +358,7 @@ class __TwigTemplate_8ef8cb72afadf80b0110dd404e1b3af895c0df8b50e97fcc187faf81e52
     
         {% if not app.user %}
              
-             <a class=\"navbar-brand\" href=\"#\">Start Bootstrap</a>
+             <a class=\"navbar-brand\" href=\"#\">|---------></a>
         <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
           <span class=\"navbar-toggler-icon\"></span>
         </button>
@@ -422,7 +420,7 @@ class __TwigTemplate_8ef8cb72afadf80b0110dd404e1b3af895c0df8b50e97fcc187faf81e52
                 {% else %}
                    <li class=\"nav-item\"> 
                 {% endif %}
-              <a class=\"nav-link\" href=\"{{ path('project_insect_list')}}\">Friends</a>
+              <a class=\"nav-link\" href=\"#\">Friends</a>
             </li>
             <li class=\"nav-item\">
               <a class=\"nav-link\" href=\"{{ path('fos_user_security_logout')}}\">logout</a>
