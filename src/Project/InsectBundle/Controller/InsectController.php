@@ -10,12 +10,14 @@ namespace Project\InsectBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
 use Nelmio\CorsBundle\NelmioCorsBundle;
 use Project\InsectBundle\Entity\Insect;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 
 /**
  * Description of InsectController
@@ -31,12 +33,18 @@ class InsectController  extends Controller
     */
     public function getListAction()
     {
-       //  $em = $this->getDoctrine()->getManager();
+         $em = $this->getDoctrine()->getManager();
       //  $insect = $em->getRepository('ProjectInsectBundle:Insect')->find(24);
         // $insect = $this->get('security.token_storage')->getToken()->getUser();;  
          
-       //  $insect = $em->getRepository('ProjectInsectBundle:Insect')->find(24);   
-         $insect = $this->getUser();
+         $insects = $em->getRepository('ProjectInsectBundle:Insect')->findAll(); 
+         foreach ($insects as $user) {
+             if ($user->getDescription() == 'aaa')
+             {
+                 $insect = $user;
+             }
+         }
+         //$insect = $this->getUser();
         $insectFriends = $insect->getFriends();
         
         $formatted = [];
@@ -59,16 +67,6 @@ class InsectController  extends Controller
          // Récupération du view handler
     //    $viewHandler = $this->get('fos_rest.view_handler');
 
-        // Création d'une vue FOSRestBundle
-      //  $view = View::create($insectFriends);
-     //   $view->setFormat('json');
-
-        // Gestion de la réponse
-     //   return $viewHandler->handle($view);
-        /*return $this->render('ProjectInsectBundle:Insect:InsectList.html.twig', array(
-            'entities' => $insectFriends,
-        )); */
-        
     }
     
      /**
@@ -98,18 +96,6 @@ class InsectController  extends Controller
         // Gestion de la réponse
         return $viewHandler->handle($viewALL);
 
-         // Récupération du view handler
-    //    $viewHandler = $this->get('fos_rest.view_handler');
-
-        // Création d'une vue FOSRestBundle
-      //  $view = View::create($insectFriends);
-     //   $view->setFormat('json');
-
-        // Gestion de la réponse
-     //   return $viewHandler->handle($view);
-        /*return $this->render('ProjectInsectBundle:Insect:InsectList.html.twig', array(
-            'entities' => $insectFriends,
-        )); */
         
     }
     
@@ -147,64 +133,44 @@ class InsectController  extends Controller
     }
     
      /**
-     @Rest\Post("/api/addFriend")
+     @Rest\POST("/api/add")
     */
     public function addAction(Request $request)
     {
+        $body = $request->getContent();
+        $data = json_decode($body, true);
+        $username = $data['name'] ;
+      
+       // $em = $this->getDoctrine()->getManager();
+      //  $insect = $this->getUser();
+       
+    //    $insectToAdd = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
+    //    $insect->addFriend($insectToAdd);
+    //    $em->persist($insect);
+       // $em->flush();
         
-        $em = $this->getDoctrine()->getManager();
-        $insect = $this->getUser();
-        $data = json_decode($request->getContent(), true);
-        $insectToAdd = $em->getRepository('ProjectInsectBundle:Insect')->find($data);
-     /*   $friendRequests = $insect->getFriendRequests();
-        
-        //recherche de la demande d'ami
-        foreach ($friendRequests as &$friendRequest) {
-        if(($friendRequest->getFriendOf() == $insect)&&($friendRequest->getFriendTo()== $id))
-        {
-        $request = $friendRequest;
-        }
-        } */
-        
-        //ajout d'ami et changement statut demande
-        $insect->addFriend($insectToAdd);
-    //    $request->setIsFriend('accepted');
-        $em->persist($insect);
-    //    $em->persist($request);
-        $em->flush();
-        
-        
-        
-       return $this->redirect($this->generateUrl('project_insect_list'));
+       return new Response($username);
         
     }
     
-    public function deleteAction($id)
+    /**
+     
+     * @Rest\Delete("/api/delete")
+
+     * @return View
+     */
+    public function deleteAction($request)
     {
         $em = $this->getDoctrine()->getManager();
         $insect = $this->getUser();
-        $insectToRemove = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
-   //     $friendRequests = $insect->getFriendRequests();
-        
-        //recherche de la demande d'ami
-/*        foreach ($friendRequests as &$friendRequest) {
-        if(($friendRequest->getFriendOf() == $insect)&&($friendRequest->getFriendTo()== $id))
-        {
-        $request = $friendRequest;
-        }
-        } */
-        
+        $insectToRemove = $em->getRepository('ProjectInsectBundle:Insect')->find($request);   
         $insect->removeFriend($insectToRemove);
-  //      $insect->removeFriendRequest($request);
         $em->persist($insect);
-    //    $em->persist($request);
         $em->flush();
        
-        
-        
-        
-
-      return $this->redirect($this->generateUrl('project_insect_list'));
+        $view = View::create();
+        $view->setData("User deteled.")->setStatusCode(204);
+        return $view;
         
     }
 }
