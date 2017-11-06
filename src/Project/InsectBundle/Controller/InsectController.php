@@ -35,27 +35,41 @@ class InsectController  extends Controller
         $data = json_decode($request->getContent(), true);
         $password = $data["password"];
         $login = $data["login"];
-        return new JsonResponse(base64_encode($login));
+        $factory = $this->get('security.encoder_factory');
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('ProjectInsectBundle:Insect')->findBy(array('username' => $login));
+        if(count($users) == 0) {
+            return new JsonResponse();
+        }
+        $encoder = $factory->getEncoder($users[0]);
+        $bool = ($encoder->isPasswordValid($users[0]->getPassword(), $password, $users[0]->getSalt())) ? "true" : "false";
+        //return new JsonResponse($bool ? array('token' => base64_encode($login)) : 'nothing') ;
+        if($bool && count($users) == 1) {
+            $user = [
+                'id' => $users[0]->getId(),
+                'name' => $users[0]->getUserName(),
+                'email' => $users[0]->getEmail(),
+                'password' => $users[0]->getPassword(),
+            ];
+            return new JsonResponse(array('token' => base64_encode(json_encode($user))));
+        }
+        return new JsonResponse($bool);
     }
     
     /**
      @Rest\Get("/api/friends")
     */
-    public function getListAction()
+    public function getListAction(Request $request)
     {
-         $em = $this->getDoctrine()->getManager();
-      //  $insect = $em->getRepository('ProjectInsectBundle:Insect')->find(24);
-        // $insect = $this->get('security.token_storage')->getToken()->getUser();;  
-         
-         $insects = $em->getRepository('ProjectInsectBundle:Insect')->findAll(); 
-         foreach ($insects as $user) {
-             if ($user->getDescription() == 'aaa')
-             {
-                 $insect = $user;
-             }
-         }
-         //$insect = $this->getUser();
-        $insectFriends = $insect->getFriends();
+        $user = $this->getConnected($request->headers->get('token'));
+        if ($user == null) {
+            return new Response("", Codes::HTTP_FORBIDDEN);
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $CurrentUser = $em->getRepository('ProjectInsectBundle:Insect')->find($user['id']);
+        
+        $insectFriends = $CurrentUser->getFriends();
         
         $formatted = [];
         foreach ($insectFriends as $insectFriend) {
@@ -66,79 +80,44 @@ class InsectController  extends Controller
             ];
         }
 
-         $viewHandler = $this->get('fos_rest.view_handler');
-
-        // Création d'une vue FOSRestBundle
+        $viewHandler = $this->get('fos_rest.view_handler');
         $view = View::create($formatted);
         $view->setFormat('json');
-        // Gestion de la réponse
         return $viewHandler->handle($view);
-
-         // Récupération du view handler
-    //    $viewHandler = $this->get('fos_rest.view_handler');
-
     }
     
      /**
      @Rest\Get("/api/list")
     */
-    public function getListAllAction()
+    public function getListAllAction(Request $request)
     {
-         $em = $this->getDoctrine()->getManager();
-       $insectFriends = $em->getRepository('ProjectInsectBundle:Insect')->findAll();
+         $user = $this->getConnected($request->headers->get('token'));
+        if ($user == null) {
+            return new Response("", Codes::HTTP_FORBIDDEN);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $CurrentUser = $em->getRepository('ProjectInsectBundle:Insect')->find($user['id']);
+        $insectFriends =  $CurrentUser->getFriends();
+        $users = $em->getRepository('ProjectInsectBundle:Insect')->findAll();
       
         
         $formatted = [];
-        foreach ($insectFriends as $insectFriend) {
+        foreach ($users as $user) {
+            if(!in_array($user, $insectFriends))
+            {
             $formatted[] = [
-                'id' => $insectFriend->getId(),
-               'name' => $insectFriend->getUserName(),
+                'id' => $user->getId(),
+               'name' => $user->getUserName(),
               
             ];
+            }
         }
 
-         $viewHandler = $this->get('fos_rest.view_handler');
-
-        // Création d'une vue FOSRestBundle
+        $viewHandler = $this->get('fos_rest.view_handler');
         $viewALL = View::create($formatted);
         $viewALL->setFormat('json');
-        //$view->headers->set('Access-Control-Allow-Origin', '*');
-        // Gestion de la réponse
         return $viewHandler->handle($viewALL);
 
-        
-    }
-    
-    public function searchAction(Request $request)
-    {
-        $entities = new ArrayCollection(); // resultat de la recherche pour les insectes amis
-        $insects = new ArrayCollection(); // resultat de la recherche pour les autres insectes
-        $insect = $this->getUser();
-        $insectFriends = $insect->getFriends();
-        
-        if ('POST' === $request->getMethod()) {
-        $username = $request->get('search');
-        }
-        
-        $em = $this->getDoctrine()->getManager();
-        $search = $em->getRepository('ProjectInsectBundle:Insect')->createQueryBuilder('s')
-                                                                   ->Where('s.username LIKE :string')
-                                                                   ->setParameter('string',"%$username%")
-                                                                   ->getQuery()
-                                                                   ->getResult();
-        foreach ($search as &$user) {
-            if(in_array($user, $insectFriends))
-            {
-                $entities->add($user);
-            }
-            else {
-                $insects->add($user);
-            }
-        }
-        return $this->render('ProjectInsectBundle:Insect:InsectListSearch.html.twig', array(
-            'entities' => $entities,
-            'insects' => $insects,
-        ));
         
     }
     
@@ -147,15 +126,21 @@ class InsectController  extends Controller
      */
     public function addAction(Request $request)
     {
+       
+        $user = $this->getConnected($request->headers->get('token'));
+        if ($user == null) {
+            return new Response("", Codes::HTTP_FORBIDDEN);
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $CurrentUser = $em->getRepository('ProjectInsectBundle:Insect')->find($user['id']);
+        
         $body = $request->getContent();
         $data = json_decode($body, true);
         $id = $data['id'] ;
-
-        $em = $this->getDoctrine()->getManager();
-        $insect = $this->getUser(); // utilisateur courant a changer
         $insectToAdd = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
-        $insect->addFriend($insectToAdd);
-        $em->persist($insect);
+        $CurrentUser->addFriend($insectToAdd);
+        $em->persist($CurrentUser);
         $em->flush();
         
         return new Response("ajoute");
@@ -165,17 +150,46 @@ class InsectController  extends Controller
    /**
      * @Rest\DELETE("/api/deleteFriend/{id}")
      */
-    public function deleteAction($id)
+    public function deleteAction($id,Request $request)
     {
+         $user = $this->getConnected($request->headers->get('token'));
+        if ($user == null) {
+            return new Response("", Codes::HTTP_FORBIDDEN);
+        }
+        
         $em = $this->getDoctrine()->getManager();
-        $insect = $this->getUser();
+        $CurrentUser = $em->getRepository('ProjectInsectBundle:Insect')->find($user['id']);
         $insectToRemove = $em->getRepository('ProjectInsectBundle:Insect')->find($id);
-        $insect->removeFriend($insectToRemove);
-        $em->persist($insect);
+        $CurrentUser->removeFriend($insectToRemove);
+        $em->persist($CurrentUser);
         $em->flush();
 
 
         return new Response("supprime");
 
     }
+    
+     /**
+     * @Rest\Get("/api/connectedUser")
+     */
+    public function getConnectedUserAction(Request $request) {
+        $token = $request->headers->all()['token'];
+        $user = $this->getConnected($token[0]);
+        return new JsonResponse($user);
+    }
+    private function getConnected($token) {
+        $em = $this->getDoctrine()->getManager();
+        $username = json_decode(base64_decode($token))->{'name'};
+        $users = $em->getRepository('ProjectInsectBundle:Insect')->findBy(array('username' => $username));
+        if(count($users) != 1) {
+            return null;
+        }
+        return [
+            'id' => $users[0]->getId(),
+            'name' => $users[0]->getUserName(),
+            'email' => $users[0]->getEmail(),
+            'password' => $users[0]->getPassword(),
+        ];
+    }
+
 }
